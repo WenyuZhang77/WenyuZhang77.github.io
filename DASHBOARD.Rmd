@@ -1,0 +1,67 @@
+---
+title: "DASHBOARD"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+```
+
+```{r}
+data(ny_noaa)
+set.seed(1)
+
+ny_noaa_data = 
+  ny_noaa %>% 
+  sample_n(50000) %>% 
+  janitor::clean_names() %>% 
+  mutate(date = as.character(date)) %>% 
+  separate(date, into = c("year", "month", "day"), sep = "-") %>% 
+  mutate(month = month.name[as.integer(month)],
+         tmax = as.numeric(tmax) / 10, 
+         tmin = as.numeric(tmin) / 10,
+         snow = as.numeric(snow),
+         snwd = as.numeric(snwd)
+         ) %>% 
+  arrange(year) %>% 
+  drop_na()
+```
+
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Plotly scatterplot: Maximum tempature and Minmium tempature in different Weather stations in 1981
+```{r}
+ny_noaa_data %>%
+  filter(year == 1981) %>%
+  plot_ly(x = ~tmin, y = ~tmax, color = ~id, type = "scatter", mode = "markers") 
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Plotly boxplot: The distribution of snow from year 1981 to year 1985
+
+```{r}
+ny_noaa_data %>% 
+  filter(snow > 0 & snow < 1000,
+         year == 1981 | year == 1982 | year == 1983 | year == 1984 | year == 1985) %>%
+  plot_ly(x = ~year, y = ~snow, color = ~year, type = "box")
+```
+
+### Plotly barchart: The maximum temperature in 2007 in USW Weather stations
+
+```{r}
+ny_noaa_data %>% 
+  filter(year == "2007", 
+         str_detect(id, "USW")) %>%
+  plot_ly(x = ~month, y = ~tmax, type = "bar", color = ~id)
+```
+

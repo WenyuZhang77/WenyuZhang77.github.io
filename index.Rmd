@@ -1,0 +1,49 @@
+---
+title: "My awesome website"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+This is Wenyu Zhang's awesome website
+
+# I made it!
+This is Wenyu's first website. Nice job. 
+
+I am a first-year master student in biostatistics at Columbia Univerisity Mailman School of public health.
+
+I am a big fan of Formula one racing, and Kimi Räikkönen is my favorite F1 racing driver.
+
+![](images/kimi-raikkonen.jpg)
+
+# Instruction
+If you want to check my personal information, such as academic experience and [resume](Resume-Wenyu Zhang (WZ2591).pdf). Please click [About me](about.html) button on the top right of the website to check.
+
+If you have any questions and want to contact with me, please click the Letter button on the top right of the website to send an email to me. 
+You can also get my phone number and address at the bottom of this website.
+
+If you want to check my Github, please click [Cat](http://github.com/WenyuZhang77) button on the top right of the website.
+
+If you want to check my linkedin, please click [In](http://www.linkedin.com/in/vincentwenyuzhang) button on the top right of the website.
+
+# Data analysis - NY NOAA
+NOAA of the NCEI provides public access to some weather data, including the GHCN (Global Historical Climatology Network)-Daily database of summary statistics from weather stations around the world.
+
+In this section, I am trying to analysis the data in "NY NOAA" by creating a flexdashboard.
+
+You can check the flexdashboard for [dashboard](DASHBOARD.html)
+
+If you are interested in the process, feel free to check [plotly](plotly.html)
+
+# Contact Information
+
+Email: wz2591@cumc.columbia.edu
+
+Phone Number: 740-825-9496
+
+Feel free to contact me!
+
+
+
+

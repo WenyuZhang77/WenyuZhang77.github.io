@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Plotly</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="DASHBOARD.html">Dashboard</a>
+</li>
+<li>
+  <a href="plotly.html">Plotly</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="mailto:&lt;wz2591@cumc.columbia.edu&gt;">
+    <span class="fa fa-envelope fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://github.com/WenyuZhang77">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="http://www.linkedin.com/in/vincentwenyuzhang">
+    <span class="fa fa-linkedin fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Plotly</h1>
+
+</div>
+
+
+<pre class="r"><code>data(ny_noaa)
+set.seed(1)
+
+ny_noaa_data = 
+  ny_noaa %&gt;% 
+  sample_n(50000) %&gt;% 
+  janitor::clean_names() %&gt;% 
+  mutate(date = as.character(date)) %&gt;% 
+  separate(date, into = c(&quot;year&quot;, &quot;month&quot;, &quot;day&quot;), sep = &quot;-&quot;) %&gt;% 
+  mutate(month = month.name[as.integer(month)],
+         tmax = as.numeric(tmax) / 10, 
+         tmin = as.numeric(tmin) / 10,
+         snow = as.numeric(snow),
+         snwd = as.numeric(snwd)
+         ) %&gt;% 
+  arrange(year) %&gt;% 
+  drop_na()
+  
+  
+ny_noaa_data</code></pre>
+<pre><code>## # A tibble: 23,361 × 9
+##    id          year  month     day    prcp  snow  snwd  tmax  tmin
+##    &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 USC00308739 1981  January   06       13    13   203  -3.3 -16.1
+##  2 USC00300063 1981  October   06        0     0     0  15.6   8.3
+##  3 USC00303354 1981  June      01        0     0     0  23.3   3.9
+##  4 USC00308625 1981  August    16      119     0     0  22.8  15.6
+##  5 USC00306232 1981  January   31        0     0   152  -0.6 -17.8
+##  6 USC00301974 1981  January   07       25    38    76  -1.1  -7.8
+##  7 USC00301110 1981  September 14       38     0     0  25.6  10.6
+##  8 USC00306164 1981  May       22        0     0     0  23.3   8.3
+##  9 USC00303360 1981  September 23      201     0     0  11.1   4.4
+## 10 USC00306184 1981  May       29        5     0     0  20    12.8
+## # … with 23,351 more rows</code></pre>
+<div id="plotly-scatterplot-maximum-tempature-and-minmium-tempature-in-different-weather-stations-in-1981" class="section level3">
+<h3>Plotly scatterplot: Maximum tempature and Minmium tempature in different Weather stations in 1981</h3>
+<pre><code>## Warning in RColorBrewer::brewer.pal(N, &quot;Set2&quot;): n too large, allowed maximum for palette Set2 is 8
+## Returning the palette you asked for with that many colors
+
+## Warning in RColorBrewer::brewer.pal(N, &quot;Set2&quot;): n too large, allowed maximum for palette Set2 is 8
+## Returning the palette you asked for with that many colors</code></pre>
+<div id="htmlwidget-17a75c087d04bf8d6f8c" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-17a75c087d04bf8d6f8c">{"x":{"visdat":{"3a2a1b6688a1":["function () ","plotlyVisDat"]},"cur_data":"3a2a1b6688a1","attrs":{"3a2a1b6688a1":{"x":{},"y":{},"mode":"markers","color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"tmin"},"yaxis":{"domain":[0,1],"automargin":true,"title":"tmax"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[18.9],"y":[27.8],"mode":"markers","type":"scatter","name":"USC00300023","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[8.9,15.6,14.4,2.2],"y":[26.1,26.7,27.2,21.7],"mode":"markers","type":"scatter","name":"USC00300055","marker":{"color":"rgba(116,192,161,1)","line":{"color":"rgba(116,192,161,1)"}},"textfont":{"color":"rgba(116,192,161,1)"},"error_y":{"color":"rgba(116,192,161,1)"},"error_x":{"color":"rgba(116,192,161,1)"},"line":{"color":"rgba(116,192,161,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[8.3,7.2,8.9,-4.4,18.3,0.6,15],"y":[15.6,18.3,18.9,5,23.9,10.6,22.2],"mode":"markers","type":"scatter","name":"USC00300063","marker":{"color":"rgba(128,190,158,1)","line":{"color":"rgba(128,190,158,1)"}},"textfont":{"color":"rgba(128,190,158,1)"},"error_y":{"color":"rgba(128,190,158,1)"},"error_x":{"color":"rgba(128,190,158,1)"},"line":{"color":"rgba(128,190,158,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-13.9,-11.1,-3.9,6.1,-2.2,16.1,16.1],"y":[5.6,1.7,6.1,11.7,12.2,28.3,21.7],"mode":"markers","type":"scatter","name":"USC00300085","marker":{"color":"rgba(138,188,154,1)","line":{"color":"rgba(138,188,154,1)"}},"textfont":{"color":"rgba(138,188,154,1)"},"error_y":{"color":"rgba(138,188,154,1)"},"error_x":{"color":"rgba(138,188,154,1)"},"line":{"color":"rgba(138,188,154,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[8.3,12.8],"y":[24.4,30.6],"mode":"markers","type":"scatter","name":"USC00300093","marker":{"color":"rgba(148,185,151,1)","line":{"color":"rgba(148,185,151,1)"}},"textfont":{"color":"rgba(148,185,151,1)"},"error_y":{"color":"rgba(148,185,151,1)"},"error_x":{"color":"rgba(148,185,151,1)"},"line":{"color":"rgba(148,185,151,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-26.1,-10.6,-1.1],"y":[-13.3,6.7,12.8],"mode":"markers","type":"scatter","name":"USC00300183","marker":{"color":"rgba(157,183,147,1)","line":{"color":"rgba(157,183,147,1)"}},"textfont":{"color":"rgba(157,183,147,1)"},"error_y":{"color":"rgba(157,183,147,1)"},"error_x":{"color":"rgba(157,183,147,1)"},"line":{"color":"rgba(157,183,147,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-5.6,-7.2,13.3,-3.9,-10,0.6,6.1,2.8],"y":[6.1,-2.8,22.8,6.1,0.6,9.4,23.3,14.4],"mode":"markers","type":"scatter","name":"USC00300220","marker":{"color":"rgba(166,181,144,1)","line":{"color":"rgba(166,181,144,1)"}},"textfont":{"color":"rgba(166,181,144,1)"},"error_y":{"color":"rgba(166,181,144,1)"},"error_x":{"color":"rgba(166,181,144,1)"},"line":{"color":"rgba(166,181,144,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[12.8,11.7,6.1,15],"y":[24.4,20.6,20.6,25.6],"mode":"markers","type":"scatter","name":"USC00300331","marker":{"color":"rgba(174,178,140,1)","line":{"color":"rgba(174,178,140,1)"}},"textfont":{"color":"rgba(174,178,140,1)"},"error_y":{"color":"rgba(174,178,140,1)"},"error_x":{"color":"rgba(174,178,140,1)"},"line":{"color":"rgba(174,178,140,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-2.2,17.8],"y":[3.9,20.6],"mode":"markers","type":"scatter","name":"USC00300343","marker":{"color":"rgba(182,176,137,1)","line":{"color":"rgba(182,176,137,1)"}},"textfont":{"color":"rgba(182,176,137,1)"},"error_y":{"color":"rgba(182,176,137,1)"},"error_x":{"color":"rgba(182,176,137,1)"},"line":{"color":"rgba(182,176,137,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-1.7,-0.6,-3.3,1.1,-10,-2.8,4.4,8.9,-6.1],"y":[4.4,1.1,7.8,8.9,10,3.3,25,12.2,3.3],"mode":"markers","type":"scatter","name":"USC00300424","marker":{"color":"rgba(189,173,133,1)","line":{"color":"rgba(189,173,133,1)"}},"textfont":{"color":"rgba(189,173,133,1)"},"error_y":{"color":"rgba(189,173,133,1)"},"error_x":{"color":"rgba(189,173,133,1)"},"line":{"color":"rgba(189,173,133,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.1],"y":[20],"mode":"markers","type":"scatter","name":"USC00300443","marker":{"color":"rgba(196,171,130,1)","line":{"color":"rgba(196,171,130,1)"}},"textfont":{"color":"rgba(196,171,130,1)"},"error_y":{"color":"rgba(196,171,130,1)"},"error_x":{"color":"rgba(196,171,130,1)"},"line":{"color":"rgba(196,171,130,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[11.1,-2.8,-4.4],"y":[26.7,8.9,5.6],"mode":"markers","type":"scatter","name":"USC00300448","marker":{"color":"rgba(203,168,127,1)","line":{"color":"rgba(203,168,127,1)"}},"textfont":{"color":"rgba(203,168,127,1)"},"error_y":{"color":"rgba(203,168,127,1)"},"error_x":{"color":"rgba(203,168,127,1)"},"line":{"color":"rgba(203,168,127,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2.2,-11.7,-11.1],"y":[8.3,-2.8,-2.8],"mode":"markers","type":"scatter","name":"USC00300505","marker":{"color":"rgba(209,165,123,1)","line":{"color":"rgba(209,165,123,1)"}},"textfont":{"color":"rgba(209,165,123,1)"},"error_y":{"color":"rgba(209,165,123,1)"},"error_x":{"color":"rgba(209,165,123,1)"},"line":{"color":"rgba(209,165,123,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-1.7,-2.8,17.8,12.8,3.3,0.6,-1.1],"y":[3.3,6.7,26.1,26.1,16.1,10.6,18.3],"mode":"markers","type":"scatter","name":"USC00300766","marker":{"color":"rgba(216,162,120,1)","line":{"color":"rgba(216,162,120,1)"}},"textfont":{"color":"rgba(216,162,120,1)"},"error_y":{"color":"rgba(216,162,120,1)"},"error_x":{"color":"rgba(216,162,120,1)"},"line":{"color":"rgba(216,162,120,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[17.8,-5,11.7,-11.7,-1.1,-7.8,-4.4,-3.9],"y":[25,1.1,23.9,-2.2,11.7,0.6,2.8,12.2],"mode":"markers","type":"scatter","name":"USC00300785","marker":{"color":"rgba(222,159,116,1)","line":{"color":"rgba(222,159,116,1)"}},"textfont":{"color":"rgba(222,159,116,1)"},"error_y":{"color":"rgba(222,159,116,1)"},"error_x":{"color":"rgba(222,159,116,1)"},"line":{"color":"rgba(222,159,116,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[19.4,7.2,13.3,16.7,-11.1,10.6,10,-1.7],"y":[28.3,20.6,27.2,27.2,-3.3,21.1,16.7,7.8],"mode":"markers","type":"scatter","name":"USC00300889","marker":{"color":"rgba(228,156,113,1)","line":{"color":"rgba(228,156,113,1)"}},"textfont":{"color":"rgba(228,156,113,1)"},"error_y":{"color":"rgba(228,156,113,1)"},"error_x":{"color":"rgba(228,156,113,1)"},"line":{"color":"rgba(228,156,113,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-1.1,15.6,10.6,-7.2,-1.1,18.9,-6.1,5.6,1.7,-10.6,-1.7],"y":[6.1,23.9,23.3,5.6,1.1,26.7,-1.1,15,16.7,1.7,3.9],"mode":"markers","type":"scatter","name":"USC00300937","marker":{"color":"rgba(234,153,109,1)","line":{"color":"rgba(234,153,109,1)"}},"textfont":{"color":"rgba(234,153,109,1)"},"error_y":{"color":"rgba(234,153,109,1)"},"error_x":{"color":"rgba(234,153,109,1)"},"line":{"color":"rgba(234,153,109,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[6.1,5,0,16.7],"y":[21.1,20,16.7,28.3],"mode":"markers","type":"scatter","name":"USC00301095","marker":{"color":"rgba(239,149,106,1)","line":{"color":"rgba(239,149,106,1)"}},"textfont":{"color":"rgba(239,149,106,1)"},"error_y":{"color":"rgba(239,149,106,1)"},"error_x":{"color":"rgba(239,149,106,1)"},"line":{"color":"rgba(239,149,106,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[10.6,3.3,-6.7,-10],"y":[25.6,12.8,7.2,1.7],"mode":"markers","type":"scatter","name":"USC00301110","marker":{"color":"rgba(245,146,102,1)","line":{"color":"rgba(245,146,102,1)"}},"textfont":{"color":"rgba(245,146,102,1)"},"error_y":{"color":"rgba(245,146,102,1)"},"error_x":{"color":"rgba(245,146,102,1)"},"line":{"color":"rgba(245,146,102,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[11.7,5.6,13.9,16.7,7.8],"y":[17.2,18.9,29.4,19.4,20.6],"mode":"markers","type":"scatter","name":"USC00301152","marker":{"color":"rgba(250,142,99,1)","line":{"color":"rgba(250,142,99,1)"}},"textfont":{"color":"rgba(250,142,99,1)"},"error_y":{"color":"rgba(250,142,99,1)"},"error_x":{"color":"rgba(250,142,99,1)"},"line":{"color":"rgba(250,142,99,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[8.3,17.2,15.6,18.9,0.6,9.4],"y":[18.3,29.4,31.7,23.9,15.6,23.9],"mode":"markers","type":"scatter","name":"USC00301207","marker":{"color":"rgba(249,142,102,1)","line":{"color":"rgba(249,142,102,1)"}},"textfont":{"color":"rgba(249,142,102,1)"},"error_y":{"color":"rgba(249,142,102,1)"},"error_x":{"color":"rgba(249,142,102,1)"},"line":{"color":"rgba(249,142,102,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3.3,18.3,-2.8,-15,14.4,0.6,4.4,-11.1],"y":[8.9,18.3,1.7,-9.4,25.6,15.6,24.4,0.6],"mode":"markers","type":"scatter","name":"USC00301387","marker":{"color":"rgba(245,143,108,1)","line":{"color":"rgba(245,143,108,1)"}},"textfont":{"color":"rgba(245,143,108,1)"},"error_y":{"color":"rgba(245,143,108,1)"},"error_x":{"color":"rgba(245,143,108,1)"},"line":{"color":"rgba(245,143,108,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3.3,15.6,-6.7,9.4,-3.9,13.3,16.1,6.7],"y":[10.6,28.9,0,20.6,0.6,23.3,20.6,10.6],"mode":"markers","type":"scatter","name":"USC00301401","marker":{"color":"rgba(241,144,113,1)","line":{"color":"rgba(241,144,113,1)"}},"textfont":{"color":"rgba(241,144,113,1)"},"error_y":{"color":"rgba(241,144,113,1)"},"error_x":{"color":"rgba(241,144,113,1)"},"line":{"color":"rgba(241,144,113,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2.2,8.9,6.7,9.4,0],"y":[21.1,25,12.8,26.1,15.6],"mode":"markers","type":"scatter","name":"USC00301436","marker":{"color":"rgba(236,145,119,1)","line":{"color":"rgba(236,145,119,1)"}},"textfont":{"color":"rgba(236,145,119,1)"},"error_y":{"color":"rgba(236,145,119,1)"},"error_x":{"color":"rgba(236,145,119,1)"},"line":{"color":"rgba(236,145,119,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-15,-14.4,10,-1.1,-8.9,-5.6,14.4,-3.3],"y":[-1.7,-1.7,28.9,7.8,0.6,5.6,28.3,18.3],"mode":"markers","type":"scatter","name":"USC00301593","marker":{"color":"rgba(232,146,124,1)","line":{"color":"rgba(232,146,124,1)"}},"textfont":{"color":"rgba(232,146,124,1)"},"error_y":{"color":"rgba(232,146,124,1)"},"error_x":{"color":"rgba(232,146,124,1)"},"line":{"color":"rgba(232,146,124,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[12.2,-7.8,1.1,-1.7,13.3,15,-10.6,-10,-3.3],"y":[26.1,8.3,17.2,17.2,21.1,28.3,-3.9,-3.3,1.1],"mode":"markers","type":"scatter","name":"USC00301623","marker":{"color":"rgba(227,147,130,1)","line":{"color":"rgba(227,147,130,1)"}},"textfont":{"color":"rgba(227,147,130,1)"},"error_y":{"color":"rgba(227,147,130,1)"},"error_x":{"color":"rgba(227,147,130,1)"},"line":{"color":"rgba(227,147,130,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[12.2,-7.2,12.8,-3.3,-2.8,-3.9,-23.3],"y":[22.8,-0.6,26.1,5,7.8,10,-1.7],"mode":"markers","type":"scatter","name":"USC00301708","marker":{"color":"rgba(222,149,135,1)","line":{"color":"rgba(222,149,135,1)"}},"textfont":{"color":"rgba(222,149,135,1)"},"error_y":{"color":"rgba(222,149,135,1)"},"error_x":{"color":"rgba(222,149,135,1)"},"line":{"color":"rgba(222,149,135,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[14.4,-11.1],"y":[20,0],"mode":"markers","type":"scatter","name":"USC00301723","marker":{"color":"rgba(217,150,141,1)","line":{"color":"rgba(217,150,141,1)"}},"textfont":{"color":"rgba(217,150,141,1)"},"error_y":{"color":"rgba(217,150,141,1)"},"error_x":{"color":"rgba(217,150,141,1)"},"line":{"color":"rgba(217,150,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-5.6,13.3,-7.2,11.7,-2.2,3.9,-2.2,-3.3,0.6,-5],"y":[1.7,25,-2.2,26.1,11.7,12.2,16.7,0,5,11.7],"mode":"markers","type":"scatter","name":"USC00301752","marker":{"color":"rgba(212,151,146,1)","line":{"color":"rgba(212,151,146,1)"}},"textfont":{"color":"rgba(212,151,146,1)"},"error_y":{"color":"rgba(212,151,146,1)"},"error_x":{"color":"rgba(212,151,146,1)"},"line":{"color":"rgba(212,151,146,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-14.4,-7.8,0,15,-0.6,-0.6,-8.3,-1.1,-0.6],"y":[-2.2,-0.6,17.8,25.6,16.1,13.3,3.9,7.2,12.8],"mode":"markers","type":"scatter","name":"USC00301799","marker":{"color":"rgba(207,152,151,1)","line":{"color":"rgba(207,152,151,1)"}},"textfont":{"color":"rgba(207,152,151,1)"},"error_y":{"color":"rgba(207,152,151,1)"},"error_x":{"color":"rgba(207,152,151,1)"},"line":{"color":"rgba(207,152,151,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[9.4,8.9,7.2,15.6,0],"y":[27.8,18.3,20,25.6,7.8],"mode":"markers","type":"scatter","name":"USC00301966","marker":{"color":"rgba(201,152,157,1)","line":{"color":"rgba(201,152,157,1)"}},"textfont":{"color":"rgba(201,152,157,1)"},"error_y":{"color":"rgba(201,152,157,1)"},"error_x":{"color":"rgba(201,152,157,1)"},"line":{"color":"rgba(201,152,157,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-7.8,8.3,-3.9,1.1,-20,18.9,-8.9,10.6,11.1,-0.6,12.2],"y":[-1.1,26.7,5,14.4,-9.4,23.3,-1.1,16.7,22.2,2.2,26.1],"mode":"markers","type":"scatter","name":"USC00301974","marker":{"color":"rgba(196,153,162,1)","line":{"color":"rgba(196,153,162,1)"}},"textfont":{"color":"rgba(196,153,162,1)"},"error_y":{"color":"rgba(196,153,162,1)"},"error_x":{"color":"rgba(196,153,162,1)"},"line":{"color":"rgba(196,153,162,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[4.4,-1.7,-1.1,4.4,-3.3,-3.3,2.2,17.8,0,6.7],"y":[12.2,8.9,11.1,25.6,1.7,13.3,11.1,21.1,13.3,26.7],"mode":"markers","type":"scatter","name":"USC00302036","marker":{"color":"rgba(190,154,168,1)","line":{"color":"rgba(190,154,168,1)"}},"textfont":{"color":"rgba(190,154,168,1)"},"error_y":{"color":"rgba(190,154,168,1)"},"error_x":{"color":"rgba(190,154,168,1)"},"line":{"color":"rgba(190,154,168,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[17.8,-4.4,-0.6,15.6],"y":[29.4,-2.2,12.2,30.6],"mode":"markers","type":"scatter","name":"USC00302060","marker":{"color":"rgba(183,155,173,1)","line":{"color":"rgba(183,155,173,1)"}},"textfont":{"color":"rgba(183,155,173,1)"},"error_y":{"color":"rgba(183,155,173,1)"},"error_x":{"color":"rgba(183,155,173,1)"},"line":{"color":"rgba(183,155,173,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[6.7,13.3,4.4,-5],"y":[12.8,27.2,20,3.3],"mode":"markers","type":"scatter","name":"USC00302129","marker":{"color":"rgba(177,156,178,1)","line":{"color":"rgba(177,156,178,1)"}},"textfont":{"color":"rgba(177,156,178,1)"},"error_y":{"color":"rgba(177,156,178,1)"},"error_x":{"color":"rgba(177,156,178,1)"},"line":{"color":"rgba(177,156,178,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[11.1,0,13.3,13.9,-1.7,-2.8,-4.4],"y":[20,16.7,30,27.8,10,14.4,13.3],"mode":"markers","type":"scatter","name":"USC00302169","marker":{"color":"rgba(170,157,184,1)","line":{"color":"rgba(170,157,184,1)"}},"textfont":{"color":"rgba(170,157,184,1)"},"error_y":{"color":"rgba(170,157,184,1)"},"error_x":{"color":"rgba(170,157,184,1)"},"line":{"color":"rgba(170,157,184,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[8.9,10.6,-3.9,-27.8],"y":[25,26.1,3.9,-9.4],"mode":"markers","type":"scatter","name":"USC00302554","marker":{"color":"rgba(162,158,189,1)","line":{"color":"rgba(162,158,189,1)"}},"textfont":{"color":"rgba(162,158,189,1)"},"error_y":{"color":"rgba(162,158,189,1)"},"error_x":{"color":"rgba(162,158,189,1)"},"line":{"color":"rgba(162,158,189,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[7.2,-13.3,4.4,-6.7,-7.8],"y":[27.2,4.4,14.4,6.7,0.6],"mode":"markers","type":"scatter","name":"USC00302610","marker":{"color":"rgba(155,159,194,1)","line":{"color":"rgba(155,159,194,1)"}},"textfont":{"color":"rgba(155,159,194,1)"},"error_y":{"color":"rgba(155,159,194,1)"},"error_x":{"color":"rgba(155,159,194,1)"},"line":{"color":"rgba(155,159,194,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2.8,2.2,11.7],"y":[22.8,17.2,23.9],"mode":"markers","type":"scatter","name":"USC00302720","marker":{"color":"rgba(146,160,200,1)","line":{"color":"rgba(146,160,200,1)"}},"textfont":{"color":"rgba(146,160,200,1)"},"error_y":{"color":"rgba(146,160,200,1)"},"error_x":{"color":"rgba(146,160,200,1)"},"line":{"color":"rgba(146,160,200,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[18.3,1.7,-4.4,-12.8,0,-3.3,12.2],"y":[27.2,10,12.2,-4.4,22.2,6.7,26.7],"mode":"markers","type":"scatter","name":"USC00302934","marker":{"color":"rgba(143,160,203,1)","line":{"color":"rgba(143,160,203,1)"}},"textfont":{"color":"rgba(143,160,203,1)"},"error_y":{"color":"rgba(143,160,203,1)"},"error_x":{"color":"rgba(143,160,203,1)"},"line":{"color":"rgba(143,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[9.4,15,3.3,11.1,-23.3,10.6,-0.6,3.9,-5],"y":[19.4,25,17.2,20.6,-9.4,24.4,8.3,16.7,9.4],"mode":"markers","type":"scatter","name":"USC00303025","marker":{"color":"rgba(149,159,202,1)","line":{"color":"rgba(149,159,202,1)"}},"textfont":{"color":"rgba(149,159,202,1)"},"error_y":{"color":"rgba(149,159,202,1)"},"error_x":{"color":"rgba(149,159,202,1)"},"line":{"color":"rgba(149,159,202,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-12.2,16.1,-22.8,6.1,3.9],"y":[1.1,30,-10,13.9,13.9],"mode":"markers","type":"scatter","name":"USC00303033","marker":{"color":"rgba(154,158,202,1)","line":{"color":"rgba(154,158,202,1)"}},"textfont":{"color":"rgba(154,158,202,1)"},"error_y":{"color":"rgba(154,158,202,1)"},"error_x":{"color":"rgba(154,158,202,1)"},"line":{"color":"rgba(154,158,202,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-4.4,-17.8,9.4,0,6.1,4.4],"y":[8.3,-8.9,23.3,6.1,20.6,17.2],"mode":"markers","type":"scatter","name":"USC00303124","marker":{"color":"rgba(160,157,202,1)","line":{"color":"rgba(160,157,202,1)"}},"textfont":{"color":"rgba(160,157,202,1)"},"error_y":{"color":"rgba(160,157,202,1)"},"error_x":{"color":"rgba(160,157,202,1)"},"line":{"color":"rgba(160,157,202,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-6.1,17.2,15.6,-1.1,-5,2.2],"y":[-1.1,28.9,26.7,7.8,4.4,12.8],"mode":"markers","type":"scatter","name":"USC00303184","marker":{"color":"rgba(165,156,201,1)","line":{"color":"rgba(165,156,201,1)"}},"textfont":{"color":"rgba(165,156,201,1)"},"error_y":{"color":"rgba(165,156,201,1)"},"error_x":{"color":"rgba(165,156,201,1)"},"line":{"color":"rgba(165,156,201,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-8.3,-11.1,-2.8,-1.7],"y":[1.1,2.2,14.4,12.8],"mode":"markers","type":"scatter","name":"USC00303259","marker":{"color":"rgba(170,155,201,1)","line":{"color":"rgba(170,155,201,1)"}},"textfont":{"color":"rgba(170,155,201,1)"},"error_y":{"color":"rgba(170,155,201,1)"},"error_x":{"color":"rgba(170,155,201,1)"},"line":{"color":"rgba(170,155,201,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3.3,7.8,5.6,7.8,7.8],"y":[12.2,11.7,17.2,23.9,19.4],"mode":"markers","type":"scatter","name":"USC00303284","marker":{"color":"rgba(175,154,200,1)","line":{"color":"rgba(175,154,200,1)"}},"textfont":{"color":"rgba(175,154,200,1)"},"error_y":{"color":"rgba(175,154,200,1)"},"error_x":{"color":"rgba(175,154,200,1)"},"line":{"color":"rgba(175,154,200,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.6,6.7,-0.6,-18.3,6.1,-4.4,12.8],"y":[7.2,15.6,8.9,-8.9,17.2,2.2,23.3],"mode":"markers","type":"scatter","name":"USC00303319","marker":{"color":"rgba(180,153,200,1)","line":{"color":"rgba(180,153,200,1)"}},"textfont":{"color":"rgba(180,153,200,1)"},"error_y":{"color":"rgba(180,153,200,1)"},"error_x":{"color":"rgba(180,153,200,1)"},"line":{"color":"rgba(180,153,200,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[13.9,-2.8],"y":[27.8,11.1],"mode":"markers","type":"scatter","name":"USC00303346","marker":{"color":"rgba(184,152,199,1)","line":{"color":"rgba(184,152,199,1)"}},"textfont":{"color":"rgba(184,152,199,1)"},"error_y":{"color":"rgba(184,152,199,1)"},"error_x":{"color":"rgba(184,152,199,1)"},"line":{"color":"rgba(184,152,199,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3.9,12.2,18.9,12.8],"y":[23.3,26.7,29.4,28.9],"mode":"markers","type":"scatter","name":"USC00303354","marker":{"color":"rgba(189,151,199,1)","line":{"color":"rgba(189,151,199,1)"}},"textfont":{"color":"rgba(189,151,199,1)"},"error_y":{"color":"rgba(189,151,199,1)"},"error_x":{"color":"rgba(189,151,199,1)"},"line":{"color":"rgba(189,151,199,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[4.4,18.3,-13.9,-2.8,-2.2,-12.2,-11.7,12.8,11.7],"y":[11.1,23.9,-5.6,1.7,1.7,-3.9,8.3,20.6,22.2],"mode":"markers","type":"scatter","name":"USC00303360","marker":{"color":"rgba(193,150,199,1)","line":{"color":"rgba(193,150,199,1)"}},"textfont":{"color":"rgba(193,150,199,1)"},"error_y":{"color":"rgba(193,150,199,1)"},"error_x":{"color":"rgba(193,150,199,1)"},"line":{"color":"rgba(193,150,199,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[10,8.9,10,18.3,22.2],"y":[11.7,22.8,12.2,28.3,28.9],"mode":"markers","type":"scatter","name":"USC00303464","marker":{"color":"rgba(198,149,198,1)","line":{"color":"rgba(198,149,198,1)"}},"textfont":{"color":"rgba(198,149,198,1)"},"error_y":{"color":"rgba(198,149,198,1)"},"error_x":{"color":"rgba(198,149,198,1)"},"line":{"color":"rgba(198,149,198,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,10.6,11.7,9.4,10,13.3],"y":[12.2,27.2,21.7,14.4,23.9,21.7],"mode":"markers","type":"scatter","name":"USC00303773","marker":{"color":"rgba(202,147,198,1)","line":{"color":"rgba(202,147,198,1)"}},"textfont":{"color":"rgba(202,147,198,1)"},"error_y":{"color":"rgba(202,147,198,1)"},"error_x":{"color":"rgba(202,147,198,1)"},"line":{"color":"rgba(202,147,198,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-3.3,13.3,0,3.3,1.1],"y":[14.4,22.2,20.6,15.6,22.2],"mode":"markers","type":"scatter","name":"USC00303889","marker":{"color":"rgba(207,146,197,1)","line":{"color":"rgba(207,146,197,1)"}},"textfont":{"color":"rgba(207,146,197,1)"},"error_y":{"color":"rgba(207,146,197,1)"},"error_x":{"color":"rgba(207,146,197,1)"},"line":{"color":"rgba(207,146,197,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2.8,-1.7,13.3,10.6,-15,-3.3,9.4,8.9,-1.7],"y":[25,26.1,22.2,25.6,-6.1,12.8,19.4,21.1,18.9],"mode":"markers","type":"scatter","name":"USC00304025","marker":{"color":"rgba(211,145,197,1)","line":{"color":"rgba(211,145,197,1)"}},"textfont":{"color":"rgba(211,145,197,1)"},"error_y":{"color":"rgba(211,145,197,1)"},"error_x":{"color":"rgba(211,145,197,1)"},"line":{"color":"rgba(211,145,197,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-1.7,2.2,17.8,7.8],"y":[6.7,13.9,20,19.4],"mode":"markers","type":"scatter","name":"USC00304102","marker":{"color":"rgba(215,144,197,1)","line":{"color":"rgba(215,144,197,1)"}},"textfont":{"color":"rgba(215,144,197,1)"},"error_y":{"color":"rgba(215,144,197,1)"},"error_x":{"color":"rgba(215,144,197,1)"},"line":{"color":"rgba(215,144,197,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.1,13.3,-2.8,9.4,15,14.4,4.4],"y":[12.8,27.8,6.1,14.4,26.1,27.8,12.2],"mode":"markers","type":"scatter","name":"USC00304174","marker":{"color":"rgba(219,142,196,1)","line":{"color":"rgba(219,142,196,1)"}},"textfont":{"color":"rgba(219,142,196,1)"},"error_y":{"color":"rgba(219,142,196,1)"},"error_x":{"color":"rgba(219,142,196,1)"},"line":{"color":"rgba(219,142,196,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-13.3,12.2,2.2,13.3,0],"y":[-3.9,26.1,11.1,22.2,5.6],"mode":"markers","type":"scatter","name":"USC00304207","marker":{"color":"rgba(223,141,196,1)","line":{"color":"rgba(223,141,196,1)"}},"textfont":{"color":"rgba(223,141,196,1)"},"error_y":{"color":"rgba(223,141,196,1)"},"error_x":{"color":"rgba(223,141,196,1)"},"line":{"color":"rgba(223,141,196,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[5.6,3.9,10,6.1,12.8,-4.4,10.6],"y":[25.6,12.8,22.8,16.7,21.7,18.3,25],"mode":"markers","type":"scatter","name":"USC00304555","marker":{"color":"rgba(228,139,195,1)","line":{"color":"rgba(228,139,195,1)"}},"textfont":{"color":"rgba(228,139,195,1)"},"error_y":{"color":"rgba(228,139,195,1)"},"error_x":{"color":"rgba(228,139,195,1)"},"line":{"color":"rgba(228,139,195,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[13.3,-5.6,-5,6.1],"y":[21.7,-1.7,10,15.6],"mode":"markers","type":"scatter","name":"USC00304647","marker":{"color":"rgba(231,139,194,1)","line":{"color":"rgba(231,139,194,1)"}},"textfont":{"color":"rgba(231,139,194,1)"},"error_y":{"color":"rgba(231,139,194,1)"},"error_x":{"color":"rgba(231,139,194,1)"},"line":{"color":"rgba(231,139,194,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-1.7,-9.4,15.6,-6.7,0.6,13.9],"y":[15,1.1,27.2,1.7,10,27.8],"mode":"markers","type":"scatter","name":"USC00304731","marker":{"color":"rgba(228,144,189,1)","line":{"color":"rgba(228,144,189,1)"}},"textfont":{"color":"rgba(228,144,189,1)"},"error_y":{"color":"rgba(228,144,189,1)"},"error_x":{"color":"rgba(228,144,189,1)"},"line":{"color":"rgba(228,144,189,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-0.6,-2.2,4.4,-11.1,14.4,3.3,10],"y":[16.7,18.9,11.7,0,27.2,12.2,18.3],"mode":"markers","type":"scatter","name":"USC00304791","marker":{"color":"rgba(226,148,184,1)","line":{"color":"rgba(226,148,184,1)"}},"textfont":{"color":"rgba(226,148,184,1)"},"error_y":{"color":"rgba(226,148,184,1)"},"error_x":{"color":"rgba(226,148,184,1)"},"line":{"color":"rgba(226,148,184,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-0.6,7.8,11.1,0.6,-2.2,10],"y":[13.9,21.7,29.4,10,4.4,25],"mode":"markers","type":"scatter","name":"USC00304808","marker":{"color":"rgba(224,153,179,1)","line":{"color":"rgba(224,153,179,1)"}},"textfont":{"color":"rgba(224,153,179,1)"},"error_y":{"color":"rgba(224,153,179,1)"},"error_x":{"color":"rgba(224,153,179,1)"},"line":{"color":"rgba(224,153,179,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.7,2.2,-8.3,-7.8,5,7.8,16.1,15.6,7.2,-8.3,14.4,3.9,-6.7],"y":[12.8,9.4,0,-1.7,14.4,15.6,22.8,20.6,15,-5,25.6,17.2,11.1],"mode":"markers","type":"scatter","name":"USC00304844","marker":{"color":"rgba(221,157,174,1)","line":{"color":"rgba(221,157,174,1)"}},"textfont":{"color":"rgba(221,157,174,1)"},"error_y":{"color":"rgba(221,157,174,1)"},"error_x":{"color":"rgba(221,157,174,1)"},"line":{"color":"rgba(221,157,174,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[7.2,5.6,-1.1,18.9,8.3,2.8,-11.1,-5.6,-10.6,5,-2.8,12.2],"y":[15,6.7,8.3,28.9,19.4,18.3,-6.1,2.8,-5,8.9,2.2,21.1],"mode":"markers","type":"scatter","name":"USC00304849","marker":{"color":"rgba(219,162,168,1)","line":{"color":"rgba(219,162,168,1)"}},"textfont":{"color":"rgba(219,162,168,1)"},"error_y":{"color":"rgba(219,162,168,1)"},"error_x":{"color":"rgba(219,162,168,1)"},"line":{"color":"rgba(219,162,168,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.6,1.7,13.9,15,-17.8],"y":[17.8,19.4,22.2,17.8,-5.6],"mode":"markers","type":"scatter","name":"USC00304912","marker":{"color":"rgba(216,166,163,1)","line":{"color":"rgba(216,166,163,1)"}},"textfont":{"color":"rgba(216,166,163,1)"},"error_y":{"color":"rgba(216,166,163,1)"},"error_x":{"color":"rgba(216,166,163,1)"},"line":{"color":"rgba(216,166,163,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-0.6],"y":[11.7],"mode":"markers","type":"scatter","name":"USC00305310","marker":{"color":"rgba(213,170,158,1)","line":{"color":"rgba(213,170,158,1)"}},"textfont":{"color":"rgba(213,170,158,1)"},"error_y":{"color":"rgba(213,170,158,1)"},"error_x":{"color":"rgba(213,170,158,1)"},"line":{"color":"rgba(213,170,158,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[14.4,-15,13.3,-6.7,15.6,12.2,-1.1,-5],"y":[29.4,3.3,28.3,1.7,31.7,23.9,20,5.6],"mode":"markers","type":"scatter","name":"USC00305334","marker":{"color":"rgba(210,174,152,1)","line":{"color":"rgba(210,174,152,1)"}},"textfont":{"color":"rgba(210,174,152,1)"},"error_y":{"color":"rgba(210,174,152,1)"},"error_x":{"color":"rgba(210,174,152,1)"},"line":{"color":"rgba(210,174,152,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-11.1,-6.7,15.6,6.7,10.6,17.2,11.1,6.7],"y":[-1.1,2.2,27.8,13.9,25.6,23.3,15,16.7],"mode":"markers","type":"scatter","name":"USC00305377","marker":{"color":"rgba(207,178,147,1)","line":{"color":"rgba(207,178,147,1)"}},"textfont":{"color":"rgba(207,178,147,1)"},"error_y":{"color":"rgba(207,178,147,1)"},"error_x":{"color":"rgba(207,178,147,1)"},"line":{"color":"rgba(207,178,147,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-2.8,4.4,-13.9,5.6,-13.9,18.3,10],"y":[2.2,18.3,-7.8,11.1,-6.1,26.7,21.7],"mode":"markers","type":"scatter","name":"USC00305426","marker":{"color":"rgba(204,182,141,1)","line":{"color":"rgba(204,182,141,1)"}},"textfont":{"color":"rgba(204,182,141,1)"},"error_y":{"color":"rgba(204,182,141,1)"},"error_x":{"color":"rgba(204,182,141,1)"},"line":{"color":"rgba(204,182,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-3.9,-10.6,2.8,10,1.1],"y":[19.4,-3.3,25,20,6.7],"mode":"markers","type":"scatter","name":"USC00305512","marker":{"color":"rgba(200,186,136,1)","line":{"color":"rgba(200,186,136,1)"}},"textfont":{"color":"rgba(200,186,136,1)"},"error_y":{"color":"rgba(200,186,136,1)"},"error_x":{"color":"rgba(200,186,136,1)"},"line":{"color":"rgba(200,186,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-1.1,-13.9,-11.1,13.9,3.9,-5.6,-3.9],"y":[10.6,1.1,2.8,26.7,21.1,-1.7,3.9],"mode":"markers","type":"scatter","name":"USC00305597","marker":{"color":"rgba(197,190,130,1)","line":{"color":"rgba(197,190,130,1)"}},"textfont":{"color":"rgba(197,190,130,1)"},"error_y":{"color":"rgba(197,190,130,1)"},"error_x":{"color":"rgba(197,190,130,1)"},"line":{"color":"rgba(197,190,130,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[5.6,0.6,0,-6.7,-16.7,-11.7,-11.7,13.3],"y":[21.7,13.9,2.8,-0.6,-10.6,2.8,-0.6,27.8],"mode":"markers","type":"scatter","name":"USC00305635","marker":{"color":"rgba(193,194,124,1)","line":{"color":"rgba(193,194,124,1)"}},"textfont":{"color":"rgba(193,194,124,1)"},"error_y":{"color":"rgba(193,194,124,1)"},"error_x":{"color":"rgba(193,194,124,1)"},"line":{"color":"rgba(193,194,124,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[11.1],"y":[26.7],"mode":"markers","type":"scatter","name":"USC00305759","marker":{"color":"rgba(189,198,118,1)","line":{"color":"rgba(189,198,118,1)"}},"textfont":{"color":"rgba(189,198,118,1)"},"error_y":{"color":"rgba(189,198,118,1)"},"error_x":{"color":"rgba(189,198,118,1)"},"line":{"color":"rgba(189,198,118,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.7,2.2,4.4],"y":[13.3,8.9,10],"mode":"markers","type":"scatter","name":"USC00305796","marker":{"color":"rgba(185,201,112,1)","line":{"color":"rgba(185,201,112,1)"}},"textfont":{"color":"rgba(185,201,112,1)"},"error_y":{"color":"rgba(185,201,112,1)"},"error_x":{"color":"rgba(185,201,112,1)"},"line":{"color":"rgba(185,201,112,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[20.6,15.6,12.2,17.2,-2.8],"y":[25.6,23.9,24.4,29.4,3.3],"mode":"markers","type":"scatter","name":"USC00305804","marker":{"color":"rgba(181,205,106,1)","line":{"color":"rgba(181,205,106,1)"}},"textfont":{"color":"rgba(181,205,106,1)"},"error_y":{"color":"rgba(181,205,106,1)"},"error_x":{"color":"rgba(181,205,106,1)"},"line":{"color":"rgba(181,205,106,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-0.6,8.3,18.9,7.2,-0.6,-14.4,10,2.2,12.2,-1.7],"y":[2.2,15,23.9,15.6,8.3,-6.7,17.8,20,23.3,5.6],"mode":"markers","type":"scatter","name":"USC00305821","marker":{"color":"rgba(176,208,99,1)","line":{"color":"rgba(176,208,99,1)"}},"textfont":{"color":"rgba(176,208,99,1)"},"error_y":{"color":"rgba(176,208,99,1)"},"error_x":{"color":"rgba(176,208,99,1)"},"line":{"color":"rgba(176,208,99,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[12.2,15.6,0,1.1,-4.4,6.1,11.7,4.4,1.7],"y":[28.3,19.4,7.2,13.9,15.6,18.3,18.3,7.2,13.9],"mode":"markers","type":"scatter","name":"USC00306085","marker":{"color":"rgba(172,212,92,1)","line":{"color":"rgba(172,212,92,1)"}},"textfont":{"color":"rgba(172,212,92,1)"},"error_y":{"color":"rgba(172,212,92,1)"},"error_x":{"color":"rgba(172,212,92,1)"},"line":{"color":"rgba(172,212,92,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[8.3,6.1,7.8,-6.1,-1.7,3.9,-1.7],"y":[23.3,17.8,25.6,5.6,13.9,13.3,3.9],"mode":"markers","type":"scatter","name":"USC00306164","marker":{"color":"rgba(167,216,85,1)","line":{"color":"rgba(167,216,85,1)"}},"textfont":{"color":"rgba(167,216,85,1)"},"error_y":{"color":"rgba(167,216,85,1)"},"error_x":{"color":"rgba(167,216,85,1)"},"line":{"color":"rgba(167,216,85,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[12.8,8.9,-16.1,12.8,11.1,3.3,-24.4,0,-16.1,7.2,-26.1],"y":[20,26.1,-6.7,26.1,21.7,12.8,-8.9,10,-4.4,18.3,-8.9],"mode":"markers","type":"scatter","name":"USC00306184","marker":{"color":"rgba(170,216,83,1)","line":{"color":"rgba(170,216,83,1)"}},"textfont":{"color":"rgba(170,216,83,1)"},"error_y":{"color":"rgba(170,216,83,1)"},"error_x":{"color":"rgba(170,216,83,1)"},"line":{"color":"rgba(170,216,83,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-17.8,-8.9,-17.8,4.4,-9.4,-3.3,13.3,-3.9,-2.8],"y":[-0.6,0.6,0.6,14.4,-3.3,0,17.8,13.9,12.8],"mode":"markers","type":"scatter","name":"USC00306232","marker":{"color":"rgba(176,216,81,1)","line":{"color":"rgba(176,216,81,1)"}},"textfont":{"color":"rgba(176,216,81,1)"},"error_y":{"color":"rgba(176,216,81,1)"},"error_x":{"color":"rgba(176,216,81,1)"},"line":{"color":"rgba(176,216,81,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[17.2,-4.4,18.3,15,5,15.6,12.8,-14.4,1.7,18.3,-13.9,-7.8],"y":[23.3,0.6,25,22.2,7.8,24.4,21.1,-3.9,6.7,26.1,-2.8,-2.2],"mode":"markers","type":"scatter","name":"USC00306314","marker":{"color":"rgba(181,216,79,1)","line":{"color":"rgba(181,216,79,1)"}},"textfont":{"color":"rgba(181,216,79,1)"},"error_y":{"color":"rgba(181,216,79,1)"},"error_x":{"color":"rgba(181,216,79,1)"},"line":{"color":"rgba(181,216,79,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[19.4,10,15,11.7],"y":[26.1,28.9,26.7,19.4],"mode":"markers","type":"scatter","name":"USC00306441","marker":{"color":"rgba(186,217,78,1)","line":{"color":"rgba(186,217,78,1)"}},"textfont":{"color":"rgba(186,217,78,1)"},"error_y":{"color":"rgba(186,217,78,1)"},"error_x":{"color":"rgba(186,217,78,1)"},"line":{"color":"rgba(186,217,78,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-7.8,1.7,-12.8],"y":[-3.9,14.4,-4.4],"mode":"markers","type":"scatter","name":"USC00306510","marker":{"color":"rgba(190,217,76,1)","line":{"color":"rgba(190,217,76,1)"}},"textfont":{"color":"rgba(190,217,76,1)"},"error_y":{"color":"rgba(190,217,76,1)"},"error_x":{"color":"rgba(190,217,76,1)"},"line":{"color":"rgba(190,217,76,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-7.8,5,0,12.2,2.2,-2.2,6.1,2.8],"y":[11.1,22.2,7.2,23.9,12.8,0.6,21.1,14.4],"mode":"markers","type":"scatter","name":"USC00306538","marker":{"color":"rgba(195,217,74,1)","line":{"color":"rgba(195,217,74,1)"}},"textfont":{"color":"rgba(195,217,74,1)"},"error_y":{"color":"rgba(195,217,74,1)"},"error_x":{"color":"rgba(195,217,74,1)"},"line":{"color":"rgba(195,217,74,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[20,2.2,8.3],"y":[33.9,13.9,16.7],"mode":"markers","type":"scatter","name":"USC00306659","marker":{"color":"rgba(200,217,73,1)","line":{"color":"rgba(200,217,73,1)"}},"textfont":{"color":"rgba(200,217,73,1)"},"error_y":{"color":"rgba(200,217,73,1)"},"error_x":{"color":"rgba(200,217,73,1)"},"line":{"color":"rgba(200,217,73,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[5.6,3.9,10,10.6,-3.3],"y":[10,22.2,17.8,28.9,5],"mode":"markers","type":"scatter","name":"USC00306774","marker":{"color":"rgba(205,217,71,1)","line":{"color":"rgba(205,217,71,1)"}},"textfont":{"color":"rgba(205,217,71,1)"},"error_y":{"color":"rgba(205,217,71,1)"},"error_x":{"color":"rgba(205,217,71,1)"},"line":{"color":"rgba(205,217,71,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2.8,-0.6,11.1,16.7,12.2],"y":[12.8,18.3,21.1,24.4,23.9],"mode":"markers","type":"scatter","name":"USC00306957","marker":{"color":"rgba(209,217,69,1)","line":{"color":"rgba(209,217,69,1)"}},"textfont":{"color":"rgba(209,217,69,1)"},"error_y":{"color":"rgba(209,217,69,1)"},"error_x":{"color":"rgba(209,217,69,1)"},"line":{"color":"rgba(209,217,69,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[9.4,-6.1,16.1,16.1,-3.3,15,-12.2,-5.6,-3.3,15.6],"y":[21.1,-3.9,26.7,24.4,3.3,26.7,-0.6,2.8,7.8,31.1],"mode":"markers","type":"scatter","name":"USC00307134","marker":{"color":"rgba(214,217,67,1)","line":{"color":"rgba(214,217,67,1)"}},"textfont":{"color":"rgba(214,217,67,1)"},"error_y":{"color":"rgba(214,217,67,1)"},"error_x":{"color":"rgba(214,217,67,1)"},"line":{"color":"rgba(214,217,67,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[15.6,-1.1,-5.6,-11.1,-1.1,2.2,-2.2,-1.1],"y":[25.6,21.7,16.1,2.8,5.6,27.8,5.6,2.2],"mode":"markers","type":"scatter","name":"USC00307405","marker":{"color":"rgba(218,217,65,1)","line":{"color":"rgba(218,217,65,1)"}},"textfont":{"color":"rgba(218,217,65,1)"},"error_y":{"color":"rgba(218,217,65,1)"},"error_x":{"color":"rgba(218,217,65,1)"},"line":{"color":"rgba(218,217,65,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.7,-3.9,17.2,8.3,-7.8,17.2,1.1,-2.8,9.4],"y":[19.4,23.9,30.6,16.7,11.1,27.8,23.3,10,20],"mode":"markers","type":"scatter","name":"USC00307484","marker":{"color":"rgba(223,217,63,1)","line":{"color":"rgba(223,217,63,1)"}},"textfont":{"color":"rgba(223,217,63,1)"},"error_y":{"color":"rgba(223,217,63,1)"},"error_x":{"color":"rgba(223,217,63,1)"},"line":{"color":"rgba(223,217,63,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-4.4,11.7,16.7],"y":[6.1,18.9,31.1],"mode":"markers","type":"scatter","name":"USC00307497","marker":{"color":"rgba(227,217,62,1)","line":{"color":"rgba(227,217,62,1)"}},"textfont":{"color":"rgba(227,217,62,1)"},"error_y":{"color":"rgba(227,217,62,1)"},"error_x":{"color":"rgba(227,217,62,1)"},"line":{"color":"rgba(227,217,62,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[8.3,17.8,7.2,0],"y":[21.1,21.7,20,13.3],"mode":"markers","type":"scatter","name":"USC00307633","marker":{"color":"rgba(232,217,59,1)","line":{"color":"rgba(232,217,59,1)"}},"textfont":{"color":"rgba(232,217,59,1)"},"error_y":{"color":"rgba(232,217,59,1)"},"error_x":{"color":"rgba(232,217,59,1)"},"line":{"color":"rgba(232,217,59,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.7,5,14.4,-20,1.1,12.8,5],"y":[12.2,15,22.8,-5,10,17.2,15.6],"mode":"markers","type":"scatter","name":"USC00307799","marker":{"color":"rgba(236,217,57,1)","line":{"color":"rgba(236,217,57,1)"}},"textfont":{"color":"rgba(236,217,57,1)"},"error_y":{"color":"rgba(236,217,57,1)"},"error_x":{"color":"rgba(236,217,57,1)"},"line":{"color":"rgba(236,217,57,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[18.3,-1.1,-14.4,20.6,1.1,13.9,-12.2,4.4],"y":[25,2.8,-6.1,27.2,12.8,27.8,-7.8,8.9],"mode":"markers","type":"scatter","name":"USC00307842","marker":{"color":"rgba(240,217,55,1)","line":{"color":"rgba(240,217,55,1)"}},"textfont":{"color":"rgba(240,217,55,1)"},"error_y":{"color":"rgba(240,217,55,1)"},"error_x":{"color":"rgba(240,217,55,1)"},"line":{"color":"rgba(240,217,55,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[16.7,4.4],"y":[26.7,16.7],"mode":"markers","type":"scatter","name":"USC00308058","marker":{"color":"rgba(245,217,53,1)","line":{"color":"rgba(245,217,53,1)"}},"textfont":{"color":"rgba(245,217,53,1)"},"error_y":{"color":"rgba(245,217,53,1)"},"error_x":{"color":"rgba(245,217,53,1)"},"line":{"color":"rgba(245,217,53,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[15.6,-8.9,-10,12.2,-12.2,1.7,-1.7],"y":[23.3,-3.9,8.9,25.6,4.4,16.7,13.9],"mode":"markers","type":"scatter","name":"USC00308088","marker":{"color":"rgba(249,217,51,1)","line":{"color":"rgba(249,217,51,1)"}},"textfont":{"color":"rgba(249,217,51,1)"},"error_y":{"color":"rgba(249,217,51,1)"},"error_x":{"color":"rgba(249,217,51,1)"},"line":{"color":"rgba(249,217,51,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-13.3,-6.7,-2.8,-12.8,6.7,7.8,1.7],"y":[-2.2,0.6,12.2,-6.1,16.1,23.3,12.8],"mode":"markers","type":"scatter","name":"USC00308248","marker":{"color":"rgba(253,217,48,1)","line":{"color":"rgba(253,217,48,1)"}},"textfont":{"color":"rgba(253,217,48,1)"},"error_y":{"color":"rgba(253,217,48,1)"},"error_x":{"color":"rgba(253,217,48,1)"},"line":{"color":"rgba(253,217,48,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[8.3,2.2],"y":[16.7,17.8],"mode":"markers","type":"scatter","name":"USC00308322","marker":{"color":"rgba(254,216,52,1)","line":{"color":"rgba(254,216,52,1)"}},"textfont":{"color":"rgba(254,216,52,1)"},"error_y":{"color":"rgba(254,216,52,1)"},"error_x":{"color":"rgba(254,216,52,1)"},"line":{"color":"rgba(254,216,52,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.7,-6.7,10.6,20,1.7,-6.1,20,17.2,13.3,-5.6,0],"y":[12.8,-2.2,26.1,30.6,11.7,1.7,30,29.4,26.1,10.6,12.2],"mode":"markers","type":"scatter","name":"USC00308600","marker":{"color":"rgba(253,215,59,1)","line":{"color":"rgba(253,215,59,1)"}},"textfont":{"color":"rgba(253,215,59,1)"},"error_y":{"color":"rgba(253,215,59,1)"},"error_x":{"color":"rgba(253,215,59,1)"},"line":{"color":"rgba(253,215,59,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[15.6,2.8,1.1,-7.8,0,1.1,8.3,-8.9,2.2,-8.3,3.9],"y":[22.8,9.4,11.1,-1.1,13.3,17.8,20.6,2.8,12.8,-1.7,14.4],"mode":"markers","type":"scatter","name":"USC00308625","marker":{"color":"rgba(252,214,66,1)","line":{"color":"rgba(252,214,66,1)"}},"textfont":{"color":"rgba(252,214,66,1)"},"error_y":{"color":"rgba(252,214,66,1)"},"error_x":{"color":"rgba(252,214,66,1)"},"line":{"color":"rgba(252,214,66,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[14.4,-20.6,-3.9,-13.3,16.7,1.7,0],"y":[23.9,-11.1,4.4,-3.3,26.1,10.6,11.7],"mode":"markers","type":"scatter","name":"USC00308627","marker":{"color":"rgba(251,213,73,1)","line":{"color":"rgba(251,213,73,1)"}},"textfont":{"color":"rgba(251,213,73,1)"},"error_y":{"color":"rgba(251,213,73,1)"},"error_x":{"color":"rgba(251,213,73,1)"},"line":{"color":"rgba(251,213,73,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-10,-7.8,-33.3,12.8,3.3,10.6,8.9,11.1,15,-4.4,0],"y":[-1.7,11.7,-10.6,23.3,9.4,21.1,26.1,13.9,25.6,8.9,11.1],"mode":"markers","type":"scatter","name":"USC00308631","marker":{"color":"rgba(250,212,79,1)","line":{"color":"rgba(250,212,79,1)"}},"textfont":{"color":"rgba(250,212,79,1)"},"error_y":{"color":"rgba(250,212,79,1)"},"error_x":{"color":"rgba(250,212,79,1)"},"line":{"color":"rgba(250,212,79,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-16.1,0,-3.3,-24.4,18.3,11.7],"y":[-3.3,6.1,8.9,-12.2,24.4,18.9],"mode":"markers","type":"scatter","name":"USC00308739","marker":{"color":"rgba(249,211,84,1)","line":{"color":"rgba(249,211,84,1)"}},"textfont":{"color":"rgba(249,211,84,1)"},"error_y":{"color":"rgba(249,211,84,1)"},"error_x":{"color":"rgba(249,211,84,1)"},"line":{"color":"rgba(249,211,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-18.3,8.3,-5.6,-3.3,-28.3,-2.2,2.8],"y":[-5.6,27.8,12.8,7.8,-12.8,11.7,9.4],"mode":"markers","type":"scatter","name":"USC00308746","marker":{"color":"rgba(248,210,90,1)","line":{"color":"rgba(248,210,90,1)"}},"textfont":{"color":"rgba(248,210,90,1)"},"error_y":{"color":"rgba(248,210,90,1)"},"error_x":{"color":"rgba(248,210,90,1)"},"line":{"color":"rgba(248,210,90,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[16.1,6.1,-1.7,10,16.7,5,10.6],"y":[26.1,11.1,6.1,15.6,25,16.7,20],"mode":"markers","type":"scatter","name":"USC00308773","marker":{"color":"rgba(246,209,95,1)","line":{"color":"rgba(246,209,95,1)"}},"textfont":{"color":"rgba(246,209,95,1)"},"error_y":{"color":"rgba(246,209,95,1)"},"error_x":{"color":"rgba(246,209,95,1)"},"line":{"color":"rgba(246,209,95,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-1.1,-5,1.1,-2.2],"y":[16.1,3.3,12.2,1.7],"mode":"markers","type":"scatter","name":"USC00308833","marker":{"color":"rgba(245,207,100,1)","line":{"color":"rgba(245,207,100,1)"}},"textfont":{"color":"rgba(245,207,100,1)"},"error_y":{"color":"rgba(245,207,100,1)"},"error_x":{"color":"rgba(245,207,100,1)"},"line":{"color":"rgba(245,207,100,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-8.3,9.4,-17.8,6.1,-3.3,-3.3],"y":[10,26.1,-6.7,10.6,14.4,9.4],"mode":"markers","type":"scatter","name":"USC00308906","marker":{"color":"rgba(244,206,105,1)","line":{"color":"rgba(244,206,105,1)"}},"textfont":{"color":"rgba(244,206,105,1)"},"error_y":{"color":"rgba(244,206,105,1)"},"error_x":{"color":"rgba(244,206,105,1)"},"line":{"color":"rgba(244,206,105,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[4.4,-10.6,1.1,14.4,17.2,-18.3,-10.6,-7.8,-1.1,17.2,-7.2],"y":[14.4,1.1,15.6,20.6,27.8,0,2.8,5,8.9,22.2,15],"mode":"markers","type":"scatter","name":"USC00308936","marker":{"color":"rgba(242,205,110,1)","line":{"color":"rgba(242,205,110,1)"}},"textfont":{"color":"rgba(242,205,110,1)"},"error_y":{"color":"rgba(242,205,110,1)"},"error_x":{"color":"rgba(242,205,110,1)"},"line":{"color":"rgba(242,205,110,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-3.3,0.6,4.4,15.6,-13.9,15.6,2.2,3.9],"y":[2.2,6.7,24.4,28.9,-1.1,27.2,11.1,8.3],"mode":"markers","type":"scatter","name":"USC00308944","marker":{"color":"rgba(241,204,114,1)","line":{"color":"rgba(241,204,114,1)"}},"textfont":{"color":"rgba(241,204,114,1)"},"error_y":{"color":"rgba(241,204,114,1)"},"error_x":{"color":"rgba(241,204,114,1)"},"line":{"color":"rgba(241,204,114,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2.2,17.2,2.2,15,8.9,2.8],"y":[12.2,22.8,11.7,18.3,11.7,11.7],"mode":"markers","type":"scatter","name":"USC00308946","marker":{"color":"rgba(240,203,119,1)","line":{"color":"rgba(240,203,119,1)"}},"textfont":{"color":"rgba(240,203,119,1)"},"error_y":{"color":"rgba(240,203,119,1)"},"error_x":{"color":"rgba(240,203,119,1)"},"line":{"color":"rgba(240,203,119,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[3.3,4.4,11.1,15.6,-26.1,1.1,-5.6],"y":[19.4,15,23.3,21.1,-12.2,17.8,0],"mode":"markers","type":"scatter","name":"USC00308962","marker":{"color":"rgba(238,202,123,1)","line":{"color":"rgba(238,202,123,1)"}},"textfont":{"color":"rgba(238,202,123,1)"},"error_y":{"color":"rgba(238,202,123,1)"},"error_x":{"color":"rgba(238,202,123,1)"},"line":{"color":"rgba(238,202,123,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[16.7,-5,2.8,3.3,5.6],"y":[26.7,10.6,12.8,13.3,12.2],"mode":"markers","type":"scatter","name":"USC00309000","marker":{"color":"rgba(237,201,128,1)","line":{"color":"rgba(237,201,128,1)"}},"textfont":{"color":"rgba(237,201,128,1)"},"error_y":{"color":"rgba(237,201,128,1)"},"error_x":{"color":"rgba(237,201,128,1)"},"line":{"color":"rgba(237,201,128,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[9.4,6.1,-16.1,14.4],"y":[16.1,23.3,-1.1,25.6],"mode":"markers","type":"scatter","name":"USC00309055","marker":{"color":"rgba(235,200,132,1)","line":{"color":"rgba(235,200,132,1)"}},"textfont":{"color":"rgba(235,200,132,1)"},"error_y":{"color":"rgba(235,200,132,1)"},"error_x":{"color":"rgba(235,200,132,1)"},"line":{"color":"rgba(235,200,132,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-0.6,20,6.1,15,-2.2,15.6,-6.7,20,16.1,-2.2],"y":[10,22.8,22.8,30,12.2,28.3,11.7,32.8,26.1,11.1],"mode":"markers","type":"scatter","name":"USC00309117","marker":{"color":"rgba(233,199,136,1)","line":{"color":"rgba(233,199,136,1)"}},"textfont":{"color":"rgba(233,199,136,1)"},"error_y":{"color":"rgba(233,199,136,1)"},"error_x":{"color":"rgba(233,199,136,1)"},"line":{"color":"rgba(233,199,136,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-8.9,15.6,18.9,0,3.9,18.3,8.9],"y":[0,24.4,24.4,12.2,10,27.8,17.8],"mode":"markers","type":"scatter","name":"USC00309189","marker":{"color":"rgba(232,198,141,1)","line":{"color":"rgba(232,198,141,1)"}},"textfont":{"color":"rgba(232,198,141,1)"},"error_y":{"color":"rgba(232,198,141,1)"},"error_x":{"color":"rgba(232,198,141,1)"},"line":{"color":"rgba(232,198,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[19.4,12.2,19.4,8.3,3.3],"y":[28.9,30,33.3,23.9,13.9],"mode":"markers","type":"scatter","name":"USC00309292","marker":{"color":"rgba(230,197,145,1)","line":{"color":"rgba(230,197,145,1)"}},"textfont":{"color":"rgba(230,197,145,1)"},"error_y":{"color":"rgba(230,197,145,1)"},"error_x":{"color":"rgba(230,197,145,1)"},"line":{"color":"rgba(230,197,145,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[16.1,8.3,16.1],"y":[30,13.9,22.2],"mode":"markers","type":"scatter","name":"USC00309389","marker":{"color":"rgba(228,196,148,1)","line":{"color":"rgba(228,196,148,1)"}},"textfont":{"color":"rgba(228,196,148,1)"},"error_y":{"color":"rgba(228,196,148,1)"},"error_x":{"color":"rgba(228,196,148,1)"},"line":{"color":"rgba(228,196,148,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-0.6,-8.3,-2.2,16.1,7.2,10.6,5,1.1,-8.3],"y":[5,2.8,6.1,29.4,18.3,18.3,8.9,15,-1.1],"mode":"markers","type":"scatter","name":"USC00309670","marker":{"color":"rgba(226,195,150,1)","line":{"color":"rgba(226,195,150,1)"}},"textfont":{"color":"rgba(226,195,150,1)"},"error_y":{"color":"rgba(226,195,150,1)"},"error_x":{"color":"rgba(226,195,150,1)"},"line":{"color":"rgba(226,195,150,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[1.7,-6.7,-3.9,11.7,2.2],"y":[18.3,0.6,6.1,26.1,12.2],"mode":"markers","type":"scatter","name":"USW00004725","marker":{"color":"rgba(224,194,152,1)","line":{"color":"rgba(224,194,152,1)"}},"textfont":{"color":"rgba(224,194,152,1)"},"error_y":{"color":"rgba(224,194,152,1)"},"error_x":{"color":"rgba(224,194,152,1)"},"line":{"color":"rgba(224,194,152,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[8.3,-9.4,15.6,0,-3.9,-7.8],"y":[20.6,3.9,21.7,8.9,5.6,2.8],"mode":"markers","type":"scatter","name":"USW00004781","marker":{"color":"rgba(221,193,153,1)","line":{"color":"rgba(221,193,153,1)"}},"textfont":{"color":"rgba(221,193,153,1)"},"error_y":{"color":"rgba(221,193,153,1)"},"error_x":{"color":"rgba(221,193,153,1)"},"line":{"color":"rgba(221,193,153,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[15.6,14.4,16.7,-1.7,-3.3],"y":[25,28.9,22.2,5.6,9.4],"mode":"markers","type":"scatter","name":"USW00004782","marker":{"color":"rgba(219,192,155,1)","line":{"color":"rgba(219,192,155,1)"}},"textfont":{"color":"rgba(219,192,155,1)"},"error_y":{"color":"rgba(219,192,155,1)"},"error_x":{"color":"rgba(219,192,155,1)"},"line":{"color":"rgba(219,192,155,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-8.9,16.1,6.7,13.9,5,16.1,-3.3,-1.1,18.9,10.6,-18.3],"y":[-2.2,21.1,25,29.4,7.2,31.1,3.9,18.9,28.9,29.4,-8.3],"mode":"markers","type":"scatter","name":"USW00014717","marker":{"color":"rgba(216,191,157,1)","line":{"color":"rgba(216,191,157,1)"}},"textfont":{"color":"rgba(216,191,157,1)"},"error_y":{"color":"rgba(216,191,157,1)"},"error_x":{"color":"rgba(216,191,157,1)"},"line":{"color":"rgba(216,191,157,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[16.1,20,-10.6,15.6,21.7,-6.7,-11.1,-12.2,25,0.6,7.2],"y":[22.8,26.7,-5.6,19.4,30,3.9,-1.1,-2.2,32.8,5.6,10.6],"mode":"markers","type":"scatter","name":"USW00014732","marker":{"color":"rgba(214,190,158,1)","line":{"color":"rgba(214,190,158,1)"}},"textfont":{"color":"rgba(214,190,158,1)"},"error_y":{"color":"rgba(214,190,158,1)"},"error_x":{"color":"rgba(214,190,158,1)"},"line":{"color":"rgba(214,190,158,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-12.8,3.9,9.4,17.8,8.3],"y":[-1.1,12.8,13.9,27.8,16.7],"mode":"markers","type":"scatter","name":"USW00014733","marker":{"color":"rgba(211,189,160,1)","line":{"color":"rgba(211,189,160,1)"}},"textfont":{"color":"rgba(211,189,160,1)"},"error_y":{"color":"rgba(211,189,160,1)"},"error_x":{"color":"rgba(211,189,160,1)"},"line":{"color":"rgba(211,189,160,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[17.2,3.3,15,-3.9,-4.4],"y":[21.1,12.2,22.8,17.2,13.9],"mode":"markers","type":"scatter","name":"USW00014735","marker":{"color":"rgba(209,189,162,1)","line":{"color":"rgba(209,189,162,1)"}},"textfont":{"color":"rgba(209,189,162,1)"},"error_y":{"color":"rgba(209,189,162,1)"},"error_x":{"color":"rgba(209,189,162,1)"},"line":{"color":"rgba(209,189,162,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0,-4.4,-11.1,7.8],"y":[11.7,12.2,-1.7,17.8],"mode":"markers","type":"scatter","name":"USW00014743","marker":{"color":"rgba(206,188,163,1)","line":{"color":"rgba(206,188,163,1)"}},"textfont":{"color":"rgba(206,188,163,1)"},"error_y":{"color":"rgba(206,188,163,1)"},"error_x":{"color":"rgba(206,188,163,1)"},"line":{"color":"rgba(206,188,163,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-19.4,11.7,17.2,-9.4,3.3],"y":[-5.6,23.3,27.8,4.4,8.3],"mode":"markers","type":"scatter","name":"USW00014750","marker":{"color":"rgba(204,187,165,1)","line":{"color":"rgba(204,187,165,1)"}},"textfont":{"color":"rgba(204,187,165,1)"},"error_y":{"color":"rgba(204,187,165,1)"},"error_x":{"color":"rgba(204,187,165,1)"},"line":{"color":"rgba(204,187,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[17.2,12.2,-1.1,15,6.1],"y":[30,25.6,18.3,30.6,14.4],"mode":"markers","type":"scatter","name":"USW00014757","marker":{"color":"rgba(201,186,166,1)","line":{"color":"rgba(201,186,166,1)"}},"textfont":{"color":"rgba(201,186,166,1)"},"error_y":{"color":"rgba(201,186,166,1)"},"error_x":{"color":"rgba(201,186,166,1)"},"line":{"color":"rgba(201,186,166,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[17.2,-8.9,-9.4,11.1,8.9],"y":[30,3.3,-0.6,23.9,16.1],"mode":"markers","type":"scatter","name":"USW00014768","marker":{"color":"rgba(198,185,168,1)","line":{"color":"rgba(198,185,168,1)"}},"textfont":{"color":"rgba(198,185,168,1)"},"error_y":{"color":"rgba(198,185,168,1)"},"error_x":{"color":"rgba(198,185,168,1)"},"line":{"color":"rgba(198,185,168,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[5,4.4,13.9,12.2,-2.2,16.7,18.3],"y":[11.7,18.3,30.6,20,6.1,23.9,26.7],"mode":"markers","type":"scatter","name":"USW00014771","marker":{"color":"rgba(196,184,170,1)","line":{"color":"rgba(196,184,170,1)"}},"textfont":{"color":"rgba(196,184,170,1)"},"error_y":{"color":"rgba(196,184,170,1)"},"error_x":{"color":"rgba(196,184,170,1)"},"line":{"color":"rgba(196,184,170,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[15.6,-11.1,6.1,-12.2,6.7,-2.8,-0.6,6.1,-7.2],"y":[24.4,-0.6,12.2,0.6,25.6,12.2,8.3,13.9,5.6],"mode":"markers","type":"scatter","name":"USW00094725","marker":{"color":"rgba(193,183,171,1)","line":{"color":"rgba(193,183,171,1)"}},"textfont":{"color":"rgba(193,183,171,1)"},"error_y":{"color":"rgba(193,183,171,1)"},"error_x":{"color":"rgba(193,183,171,1)"},"line":{"color":"rgba(193,183,171,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[18.3,2.8,13.9,15,25,18.3,2.8,2.2],"y":[29.4,13.9,22.2,20,34.4,26.1,8.3,6.7],"mode":"markers","type":"scatter","name":"USW00094728","marker":{"color":"rgba(190,182,173,1)","line":{"color":"rgba(190,182,173,1)"}},"textfont":{"color":"rgba(190,182,173,1)"},"error_y":{"color":"rgba(190,182,173,1)"},"error_x":{"color":"rgba(190,182,173,1)"},"line":{"color":"rgba(190,182,173,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[7.8,-14.4,10,-11.7],"y":[18.3,-3.9,16.7,2.2],"mode":"markers","type":"scatter","name":"USW00094745","marker":{"color":"rgba(187,182,174,1)","line":{"color":"rgba(187,182,174,1)"}},"textfont":{"color":"rgba(187,182,174,1)"},"error_y":{"color":"rgba(187,182,174,1)"},"error_x":{"color":"rgba(187,182,174,1)"},"line":{"color":"rgba(187,182,174,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[5.6,5,0,20,11.1,11.1,5],"y":[17.8,11.7,13.9,32.2,20.6,25.6,10.6],"mode":"markers","type":"scatter","name":"USW00094789","marker":{"color":"rgba(185,181,176,1)","line":{"color":"rgba(185,181,176,1)"}},"textfont":{"color":"rgba(185,181,176,1)"},"error_y":{"color":"rgba(185,181,176,1)"},"error_x":{"color":"rgba(185,181,176,1)"},"line":{"color":"rgba(185,181,176,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[20,-3.9,-6.7,2.2,-15.6,3.3,0.6,-6.7],"y":[26.1,4.4,-3.3,9.4,-3.3,19.4,2.8,11.1],"mode":"markers","type":"scatter","name":"USW00094790","marker":{"color":"rgba(182,180,177,1)","line":{"color":"rgba(182,180,177,1)"}},"textfont":{"color":"rgba(182,180,177,1)"},"error_y":{"color":"rgba(182,180,177,1)"},"error_x":{"color":"rgba(182,180,177,1)"},"line":{"color":"rgba(182,180,177,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[-16.7,-11.7,-3.9,10,15.6],"y":[-10,-6.1,8.3,27.8,29.4],"mode":"markers","type":"scatter","name":"USW00094794","marker":{"color":"rgba(179,179,179,1)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,1)"},"error_y":{"color":"rgba(179,179,179,1)"},"error_x":{"color":"rgba(179,179,179,1)"},"line":{"color":"rgba(179,179,179,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="plotly-boxplot-the-distribution-of-snow-from-year-1981-to-year-1985" class="section level3">
+<h3>Plotly boxplot: The distribution of snow from year 1981 to year 1985</h3>
+<pre class="r"><code>ny_noaa_data %&gt;% 
+  filter(snow &gt; 0 &amp; snow &lt; 1000,
+         year == 1981 | year == 1982 | year == 1983 | year == 1984 | year == 1985) %&gt;%
+  plot_ly(x = ~year, y = ~snow, color = ~year, type = &quot;box&quot;)</code></pre>
+<div id="htmlwidget-d3bfd4190b5d86c27c35" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d3bfd4190b5d86c27c35">{"x":{"visdat":{"3a2a50abc6af":["function () ","plotlyVisDat"]},"cur_data":"3a2a50abc6af","attrs":{"3a2a50abc6af":{"x":{},"y":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"box"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"year","type":"category","categoryorder":"array","categoryarray":["1981","1982","1983","1984","1985"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"snow"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"fillcolor":"rgba(102,194,165,0.5)","x":["1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981","1981"],"y":[13,38,58,25,64,46,25,66,38,10,8,30,64,64,64,51,81,51,25,25,15,25,43,127,13,51,46,51,51,48,10,8,25,102,23,10,117,13,13,8,10,102,5,64,33,8,25,25,13,5,25,25,51,99,5,46,104,38,10,38,38,15,43,8,25,20,13,64,76,20,51,25,25],"type":"box","name":"1981","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"line":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(252,141,98,0.5)","x":["1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982","1982"],"y":[25,51,5,8,13,15,76,69,36,5,25,25,102,38,5,25,51,8,51,76,3,259,53,30,15,38,25,13,25,8,3,36,8,3,127,25,5,13,13,25,102,13,3,64,38,5,13,5,20,5,66,25,51,97,51,102,25,76,10,20,132,81,25,33,51,3,13,61,3,13,15,84,8,76,51,406,38,25,51,25,58,25,132,25,178,13,13,18,13,97,5],"type":"box","name":"1982","marker":{"color":"rgba(252,141,98,1)","line":{"color":"rgba(252,141,98,1)"}},"line":{"color":"rgba(252,141,98,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(141,160,203,0.5)","x":["1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983","1983"],"y":[33,64,13,5,25,127,13,18,25,13,8,30,305,10,20,318,229,36,51,18,25,229,203,25,25,102,10,48,15,51,127,38,58,13,30,13,5,58,13,13,51,13,20,5,8,18,13,89,25,554,53,15,25,178,51,254,25,135,30,13,5,15,13,64],"type":"box","name":"1983","marker":{"color":"rgba(141,160,203,1)","line":{"color":"rgba(141,160,203,1)"}},"line":{"color":"rgba(141,160,203,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(231,138,195,0.5)","x":["1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984","1984"],"y":[25,18,25,13,10,25,84,33,13,61,178,127,25,15,25,25,76,41,13,51,43,76,86,64,64,13,109,15,97,25,53,3,8,241,5,25,51,38,51,76,38,13,152,25,25,51,25,13,15,97,254,51,25,25,13,38,8,13,254,127,33,25,3,38,5,64,56,51,76,51,84,8,64,165,5],"type":"box","name":"1984","marker":{"color":"rgba(231,138,195,1)","line":{"color":"rgba(231,138,195,1)"}},"line":{"color":"rgba(231,138,195,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(166,216,84,0.5)","x":["1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985","1985"],"y":[25,51,18,38,20,69,13,33,36,178,13,3,43,13,38,25,76,13,46,48,102,20,13,3,38,140,13,13,30,25,203,18,8,13,51,20,38,51,38,3,102,23,13,5,127,13,20,165,51,25,25,13,25,13,28,86,13,140,8,183,25,165,5,13,25,51,20,51,127,119,13,51,5,71,10,10],"type":"box","name":"1985","marker":{"color":"rgba(166,216,84,1)","line":{"color":"rgba(166,216,84,1)"}},"line":{"color":"rgba(166,216,84,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="plotly-barchart-the-maximum-temperature-in-2007-in-usw-weather-stations" class="section level3">
+<h3>Plotly barchart: The maximum temperature in 2007 in USW Weather stations</h3>
+<pre class="r"><code>ny_noaa_data %&gt;% 
+  filter(year == &quot;2007&quot;, 
+         str_detect(id, &quot;USW&quot;)) %&gt;%
+  plot_ly(x = ~month, y = ~tmax, type = &quot;bar&quot;, color = ~id)</code></pre>
+<pre><code>## Warning in RColorBrewer::brewer.pal(N, &quot;Set2&quot;): n too large, allowed maximum for palette Set2 is 8
+## Returning the palette you asked for with that many colors
+
+## Warning in RColorBrewer::brewer.pal(N, &quot;Set2&quot;): n too large, allowed maximum for palette Set2 is 8
+## Returning the palette you asked for with that many colors</code></pre>
+<div id="htmlwidget-8322b1c74e1844c07072" style="width:672px;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8322b1c74e1844c07072">{"x":{"visdat":{"3a2a6da02dea":["function () ","plotlyVisDat"]},"cur_data":"3a2a6da02dea","attrs":{"3a2a6da02dea":{"x":{},"y":{},"color":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"month","type":"category","categoryorder":"array","categoryarray":["April","August","December","February","January","July","June","March","May","November","October","September"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"tmax"},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":["June","September","January","July","January"],"y":[26.1,21.7,-0.5,26.7,2.8],"type":"bar","name":"USW00004724","marker":{"color":"rgba(102,194,165,1)","line":{"color":"rgba(102,194,165,1)"}},"textfont":{"color":"rgba(102,194,165,1)"},"error_y":{"color":"rgba(102,194,165,1)"},"error_x":{"color":"rgba(102,194,165,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["May","March","June","July","December","November","April","November","November"],"y":[15,10.6,27.2,25.6,-0.6,2.2,5,1.1,3.3],"type":"bar","name":"USW00004725","marker":{"color":"rgba(219,161,118,1)","line":{"color":"rgba(219,161,118,1)"}},"textfont":{"color":"rgba(219,161,118,1)"},"error_y":{"color":"rgba(219,161,118,1)"},"error_x":{"color":"rgba(219,161,118,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["April","April","February","January","February","January"],"y":[24.4,18.9,1.1,20,-1.7,5],"type":"bar","name":"USW00004781","marker":{"color":"rgba(217,150,141,1)","line":{"color":"rgba(217,150,141,1)"}},"textfont":{"color":"rgba(217,150,141,1)"},"error_y":{"color":"rgba(217,150,141,1)"},"error_x":{"color":"rgba(217,150,141,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["March","September","January","August","February","November"],"y":[5.6,25,13.9,16.7,7.8,10],"type":"bar","name":"USW00014732","marker":{"color":"rgba(152,158,202,1)","line":{"color":"rgba(152,158,202,1)"}},"textfont":{"color":"rgba(152,158,202,1)"},"error_y":{"color":"rgba(152,158,202,1)"},"error_x":{"color":"rgba(152,158,202,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["August","August","September","March","November","May","January","September","March","December","January","December"],"y":[27.8,31.1,23.9,13.3,6.1,25,1.1,25.6,15.6,6.7,-3.9,0.6],"type":"bar","name":"USW00014733","marker":{"color":"rgba(215,144,197,1)","line":{"color":"rgba(215,144,197,1)"}},"textfont":{"color":"rgba(215,144,197,1)"},"error_y":{"color":"rgba(215,144,197,1)"},"error_x":{"color":"rgba(215,144,197,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["March","October","February","February","June","November"],"y":[-2.2,21.1,-1.1,-6.7,31.1,6.1],"type":"bar","name":"USW00014735","marker":{"color":"rgba(205,180,144,1)","line":{"color":"rgba(205,180,144,1)"}},"textfont":{"color":"rgba(205,180,144,1)"},"error_y":{"color":"rgba(205,180,144,1)"},"error_x":{"color":"rgba(205,180,144,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["January","July","July","May","September","March","March","April","October","February"],"y":[-6.1,17.8,16.7,27.2,30.6,-14.4,7.8,17.2,15,-5],"type":"bar","name":"USW00014743","marker":{"color":"rgba(186,217,78,1)","line":{"color":"rgba(186,217,78,1)"}},"textfont":{"color":"rgba(186,217,78,1)"},"error_y":{"color":"rgba(186,217,78,1)"},"error_x":{"color":"rgba(186,217,78,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["January","July","April","January","September"],"y":[10.6,24.4,27.8,0.6,27.8],"type":"bar","name":"USW00014768","marker":{"color":"rgba(247,217,52,1)","line":{"color":"rgba(247,217,52,1)"}},"textfont":{"color":"rgba(247,217,52,1)"},"error_y":{"color":"rgba(247,217,52,1)"},"error_x":{"color":"rgba(247,217,52,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["April","March","August","November","May","December","July","January"],"y":[10,6.1,27.8,7.2,19.4,1.7,25,16.7],"type":"bar","name":"USW00014771","marker":{"color":"rgba(241,204,114,1)","line":{"color":"rgba(241,204,114,1)"}},"textfont":{"color":"rgba(241,204,114,1)"},"error_y":{"color":"rgba(241,204,114,1)"},"error_x":{"color":"rgba(241,204,114,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["June","July","September","November","December","August","March","December","September"],"y":[27.2,25.6,24.4,5.6,0.6,18.3,14.4,3.3,26.1],"type":"bar","name":"USW00094728","marker":{"color":"rgba(215,191,158,1)","line":{"color":"rgba(215,191,158,1)"}},"textfont":{"color":"rgba(215,191,158,1)"},"error_y":{"color":"rgba(215,191,158,1)"},"error_x":{"color":"rgba(215,191,158,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":["October","October","September","September","July","October","December","August"],"y":[20,26.1,27.8,21.1,28.3,27.2,10,27.8],"type":"bar","name":"USW00094789","marker":{"color":"rgba(179,179,179,1)","line":{"color":"rgba(179,179,179,1)"}},"textfont":{"color":"rgba(179,179,179,1)"},"error_y":{"color":"rgba(179,179,179,1)"},"error_x":{"color":"rgba(179,179,179,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,15 @@
+---
+title: "About me"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# This page has information about me
+
+My name is Wenyu Zhang, and I am a first year master student of biostatistics in Columbia University's Mailman School of Public Health.I got my bachelor degree of pharmaceutical science in the Ohio State University, Columbus, Ohio.
+
+I am very interested in data analysis using Rstudio, SAS. And I also want to learn how to combine data analysis with my pharmaceutical science knowledge.
+
+Feel free to check more information about my academic career in [Wenyu' resume](Resume-Wenyu Zhang (WZ2591).pdf)
